@@ -1,15 +1,15 @@
-const Block = require('./Block.js');
-const Blockchain = require('./Blockchain.js');
+const Block = require("./Block.js");
+const Blockchain = require("./Blockchain.js");
 
 let myBlockChain = new Blockchain.Blockchain();
-(function theLoop (i) {
-  setTimeout(function () {
-      let blockTest = new Block.Block("Test Block - " + (i + 1));
-      myBlockChain.addNewBlock(blockTest).then((result) => {
-          console.log(result);
-          i++;
-          if (i < 10) theLoop(i);
-      });
+(function theLoop(i) {
+  setTimeout(function() {
+    let blockTest = new Block.Block("Test Block - " + (i + 1));
+    myBlockChain.addNewBlock(blockTest).then(result => {
+      console.log(result);
+      i++;
+      if (i < 10) theLoop(i);
+    });
   }, 10000);
 })(0);
 
