@@ -56,22 +56,10 @@ class LevelDB {
           count++;
         })
         .on("end", () => {
-          resolve(count);
+          // return count-1 as genesis block doesnt count
+          resolve(count-1);
         });
     });
-
-    /*
-            let count = 0;
-            var batch = []
-            var keys = self.db.createKeyStream().then;
-            keys.on('data', function(key) {
-                batch.push({ type: "del", key: key });
-            });
-            //self.db.createKeyStream().on('data', function (data) {
-            //    console.log("count: " + count++);
-            //});
-            resolve(batch.length);
-            */
   }
 }
 

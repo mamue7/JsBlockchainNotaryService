@@ -20,13 +20,13 @@ class Blockchain {
   }
 
   // Add new block
-  addNewBlock(newBlock) {
+  addBlock(newBlock) {
     let self = this;
     return new Promise(function(resolve, reject) {
       self.getBlockHeight().then(
-        function(value) {
+        function(height) {
           // set height of the block
-          newBlock.height = value;
+          newBlock.height = height + 1;
           // set previous block hash
           self.getBlock(newBlock.height - 1).then(function(previousBlock) {
             // previous block hash
@@ -65,7 +65,7 @@ class Blockchain {
             function(value) {
               console.log(value);
               // continue to add new block after genesis block has been created
-              self.addNewBlock(newBlock);
+              self.addBlock(newBlock);
             },
             function(err) {
               console.log(err);
@@ -106,7 +106,7 @@ class Blockchain {
   getBlockHeight() {
     return new Promise((resolve, reject) => {
       db.getBlocksCount().then(function(count) {
-        if (count == 0) {
+        if (count == -1) { // no genesis block
           reject();
         } else {
           resolve(count);
@@ -133,7 +133,7 @@ class Blockchain {
   // Validate block
   validateBlock(blockHeight) {
     let self = this;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       self.getBlock(blockHeight).then(function(block) {
         let blockHash = block.hash;
         // remove block hash to test block integrity
@@ -142,41 +142,38 @@ class Blockchain {
         let validBlockHash = SHA256(JSON.stringify(block)).toString();
         // Compare
         if (blockHash === validBlockHash) {
-          resolve("Block " + blockHeight + " is valid!");
+          resolve(true);
         } else {
-          reject("Error! Block " + blockHeight + " is not valid!");
+          resolve(false);
         }
       });
     });
   }
 
   // Validate blockchain
-  validateChain() {
+  async validateChain() {
     let self = this;
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       let errorLog = [];
-      self.getBlockHeight().then(function(value) {
-        for (var i = 0; i < value; i++) {
+      try {
+        let height = await self.getBlockHeight();
+        for (let i = 0; i < height; i++) {
           // validate block
-          if (!self.validateBlock(i)) errorLog.push(i);
+          let blockIsValid = await self.validateBlock(i);
+          if(!blockIsValid)
+            errorLog.push("Hash of Block " + i + " is invalid!");
+
           // compare blocks hash link
-          self.getBlock(i).then(function(block) {
-            self.getBlock(block.height + 1).then(
-              function(nextBlock) {
-                if (block.hash !== nextBlock.previousBlockHash) {
-                  errorLog.push(i);
-                }
-              },
-              function(err) {}
-            );
-          });
+          let block = await self.getBlock(i);
+          let nextBlock = await self.getBlock(block.height + 1);
+          if (block.hash !== nextBlock.previousBlockHash) 
+            errorLog.push("Error! Hash of block " + block.height + " and previous block hash of next block differ!");
         }
-      });
-      if (errorLog.length > 0) {
-        reject(errorLog);
-      } else {
-        resolve();
       }
+      catch(err) {
+        errorLog.push(err);
+      }
+      resolve(errorLog);
     });
   }
 }
