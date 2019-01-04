@@ -2,7 +2,7 @@ const Block = require("./Block.js");
 const Blockchain = require("./Blockchain.js");
 
 let bc = new Blockchain.Blockchain();
-
+/*
 (function theLoop(i) {
   setTimeout(function() {
     let blockTest = new Block.Block("Test Block - " + (i + 1));
@@ -13,7 +13,7 @@ let bc = new Blockchain.Blockchain();
     });
   }, 1000);
 })(0);
-/*
+*/
 console.log("Validate single blocks and complete chain:");
 
 (function validateBlocks (v) {
@@ -30,4 +30,4 @@ bc.validateChain().then(function(result) {
   else 
     console.log("The chain is valid!");
 });
-*/
+

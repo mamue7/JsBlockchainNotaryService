@@ -157,17 +157,20 @@ class Blockchain {
       let errorLog = [];
       try {
         let height = await self.getBlockHeight();
-        for (let i = 0; i < height; i++) {
+        for (let i = 0; i <= height; i++) {
           // validate block
           let blockIsValid = await self.validateBlock(i);
           if(!blockIsValid)
             errorLog.push("Hash of Block " + i + " is invalid!");
-
-          // compare blocks hash link
-          let block = await self.getBlock(i);
-          let nextBlock = await self.getBlock(block.height + 1);
-          if (block.hash !== nextBlock.previousBlockHash) 
-            errorLog.push("Error! Hash of block " + block.height + " and previous block hash of next block differ!");
+          // check hashes of current and next block if current block is not the last one 
+          if(i < height)
+          {
+            // compare blocks hash link
+            let block = await self.getBlock(i);
+            let nextBlock = await self.getBlock(block.height + 1);
+            if (block.hash !== nextBlock.previousBlockHash) 
+              errorLog.push("Error! Hash of block " + block.height + " and previous block hash of next block differ!");
+          }
         }
       }
       catch(err) {
