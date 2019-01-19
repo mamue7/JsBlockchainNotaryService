@@ -37,7 +37,7 @@ class BlockController {
         this.app.post("/api/block", (req, res) => {
             if(!req.body.data || req.body.data == "")
             {
-                res.status(500). send('Error! Block contained no data!' + JSON.stringify(req.body));
+                res.status(500). send('Error! Block contained no data!');
             }
             else 
             {
