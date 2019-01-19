@@ -27,11 +27,14 @@ npm install body-parser --save
 
 To test code:
 1: Open a command prompt or shell terminal after install node.js.
+
 2: Start the Web API on Port 8000
 ```
 node app.js
 ```
+
 3: Use Postman or Browser to work with the API
+
 Available Methods: 
 
 - 'GET /api/block/:index' : get a specific block by index
@@ -42,11 +45,11 @@ Available Methods:
       "data":"Some data example"
     }
   
-Built With
+## Built With
 
 Express
 Crypto-JS
 
-Authors
+## Authors
 
 Martin Müller
