@@ -1,6 +1,6 @@
-# Blockchain Data
+# JSBlockchain
 
-Blockchain has the potential to change the way that the world approaches data. Develop Blockchain skills by understanding the data model behind Blockchain by developing your own simplified private blockchain.
+This Project creates a simple JavaScript based Blockchain and offers a Web API to work with the Blockchain data and blocks.
 
 ## Getting Started
 
@@ -16,47 +16,37 @@ Installing Node and NPM is pretty straightforward using the installer package av
 ```
 npm init
 ```
-- Install crypto-js with --save flag to save dependency to our package.json file
+- Install dependencies with --save flag to save dependency to our package.json file
 ```
+npm install express --save
 npm install crypto-js --save
-```
-- Install level with --save flag
-```
-npm install level --save
+npm install body-parser --save
 ```
 
 ## Testing
 
 To test code:
 1: Open a command prompt or shell terminal after install node.js.
-2: Enter a node session, also known as REPL (Read-Evaluate-Print-Loop).
+2: Start the Web API on Port 8000
 ```
-node
+node app.js
 ```
-3: Copy and paste your code into your node session
-4: Instantiate blockchain with blockchain variable
-```
-let blockchain = new Blockchain();
-```
-5: Generate 10 blocks using a for loop
-```
-for (var i = 0; i <= 10; i++) {
-  blockchain.addBlock(new Block("test data "+i));
-}
-```
-6: Validate blockchain
-```
-blockchain.validateChain();
-```
-7: Induce errors by changing block data
-```
-let inducedErrorBlocks = [2,4,7];
-for (var i = 0; i < inducedErrorBlocks.length; i++) {
-  blockchain.chain[inducedErrorBlocks[i]].data='induced chain error';
-}
-```
-8: Validate blockchain. The chain should now fail with blocks 2,4, and 7.
-```
-blockchain.validateChain();
-```
-# JsBlockchain
+3: Use Postman or Browser to work with the API
+Available Methods: 
+
+- 'GET /api/block/:index' : get a specific block by index
+
+- 'POST /api/block' : post data to create a new block
+  Body Data Format:
+    {
+      "data":"Some data example"
+    }
+  
+Built With
+
+Express
+Crypto-JS
+
+Authors
+
+Martin Müller
