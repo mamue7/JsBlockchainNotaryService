@@ -3,13 +3,13 @@
 /===================================================*/
 // Importing the module 'level'
 const level = require("level");
-// Declaring the folder path that store the data
-const chainDB = "./chaindata";
 // Declaring a class
 class LevelDB {
+
   // Declaring the class constructor
-  constructor() {
-    this.db = level(chainDB);
+  constructor(dbName) {
+    console.log(dbName)
+    this.db = level("./db/" + dbName);
   }
 
   // Get data from levelDB with a key (Promise)

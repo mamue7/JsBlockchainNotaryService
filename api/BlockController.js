@@ -1,6 +1,6 @@
 const SHA256 = require('crypto-js/sha256');
-const BlockClass = require('./Block.js');
-const BlockchainClass = require("./Blockchain.js");
+const BlockClass = require('../model/Block.js');
+const BlockchainClass = require("../blockchain/Blockchain.js");
 
 /**
  * Controller Definition to encapsulate routes to work with blocks

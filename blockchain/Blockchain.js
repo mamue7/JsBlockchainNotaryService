@@ -3,9 +3,9 @@
 |  ================================================*/
 
 const SHA256 = require("crypto-js/sha256");
-const LevelDBClass = require("./levelDB.js");
-const db = new LevelDBClass.LevelDB();
-const Block = require("./Block.js");
+const LevelDBClass = require("../data/levelDB.js");
+const db = new LevelDBClass.LevelDB("blockchain");
+const Block = require("../model/Block.js");
 
 class Blockchain {
   
