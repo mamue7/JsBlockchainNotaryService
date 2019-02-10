@@ -21,7 +21,6 @@ class LevelDB {
           if (err.type == "NotFoundError") {
             resolve(undefined);
           } else {
-            console.log("Block " + key + " get failed", err);
             reject(err);
           }
         } else {

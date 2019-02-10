@@ -8,15 +8,26 @@ const db = new LevelDBClass.LevelDB();
 const Block = require("./Block.js");
 
 class Blockchain {
+  
   constructor() {
+
+  }
+
+  /**
+   * initialize blockchain with genesis block
+   */
+  async initialize() {
     let self = this;
     // check if genesis block (index=0) exists
-    self.getBlock(0).catch(function(err) {
-      // create genesis block on init
-      self.addGenesisBlock().then(function(value) {
-        console.log(value);
-      });
-    });
+    await self.getBlock(0).catch(async function(err) {
+        // create genesis block on init
+        await self.addGenesisBlock().then(
+          function(value) {
+            console.log(value);
+          },
+          function(err) {});
+      }
+    );  
   }
 
   // Add new block
