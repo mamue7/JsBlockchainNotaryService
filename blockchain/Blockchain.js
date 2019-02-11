@@ -54,10 +54,8 @@ class Blockchain {
               newBlock.height,
               JSON.stringify(newBlock).toString()
             ).then(
-              function(value) {
-                resolve(
-                  "Block " + newBlock.height + " successfully added to chain!"
-                );
+              function(block) {
+                resolve(block);
               },
               function(err) {
                 reject(
@@ -139,6 +137,35 @@ class Blockchain {
         }
       );
     });
+  }
+
+  // Get block by hash
+  getBlockByHash(blockHash) {
+    return new Promise((resolve, reject) => {
+      db.getLevelDBDataByHash(blockHash).then(
+        function(block) {
+          if (block) resolve(block);
+          else reject();
+        },
+        function(err) {
+          reject(err);
+        }
+      );
+    });    
+  }
+
+  // Get block by hash
+  getBlockByWalletAddress(walletAddress) {
+    return new Promise((resolve, reject) => {
+      db.getLevelDBDataByWalletAddress(walletAddress).then(
+        function(blocks) {
+          resolve(blocks);
+        },
+        function(err) {
+          reject(err);
+        }
+      );
+    });    
   }
 
   // Validate block

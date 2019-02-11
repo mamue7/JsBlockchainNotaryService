@@ -7,10 +7,10 @@ class MempoolValidEntry {
         (this.registerStar = false),
         (this.status = {
             address: "",
-            requestTimeStamp = "",
-            message = "",
-            validationWindow = "",
-            messageSignature = false
+            requestTimeStamp: "",
+            message: "",
+            validationWindow: "",
+            messageSignature: false
         })
     }
   }

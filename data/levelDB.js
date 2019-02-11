@@ -8,11 +8,10 @@ class LevelDB {
 
   // Declaring the class constructor
   constructor(dbName) {
-    console.log(dbName)
     this.db = level("./db/" + dbName);
   }
 
-  // Get data from levelDB with a key (Promise)
+  // Get data from levelDB by key (Promise)
   getLevelDBData(key) {
     let self = this; // Because we are returning a promise, we will need this to be able to reference 'this' inside the Promise constructor
     return new Promise(function(resolve, reject) {
@@ -30,6 +29,48 @@ class LevelDB {
     });
   }
 
+  // Get data from levelDB by block hash
+  getLevelDBDataByHash(hash) {
+    let self = this; // Because we are returning a promise, we will need this to be able to reference 'this' inside the Promise constructor
+    let block;
+    return new Promise(function(resolve, reject) {
+      self.db.createReadStream()
+      .on('data', function (data) {
+          var valueObject = JSON.parse(data.value);
+          if(valueObject.hash === hash){
+              block = valueObject;
+          }
+      })
+      .on('error', function (err) {
+          reject(err)
+      })
+      .on('close', function () {
+          resolve(block);
+      });
+    });
+  }
+
+  // Get data from levelDB by block hash
+  getLevelDBDataByWalletAddress(walletAddress) {
+    let self = this; // Because we are returning a promise, we will need this to be able to reference 'this' inside the Promise constructor
+    let blocks = [];
+    return new Promise(function(resolve, reject) {
+      self.db.createReadStream()
+      .on('data', function (data) {
+          var valueObject = JSON.parse(data.value);
+          if(valueObject.body.address === walletAddress){
+              blocks.push(valueObject);
+          }
+      })
+      .on('error', function (err) {
+          reject(err)
+      })
+      .on('close', function () {
+          resolve(blocks);
+      });
+    });
+  }
+
   // Add data to levelDB with key and value (Promise)
   addLevelDBData(key, value) {
     let self = this;
@@ -38,7 +79,7 @@ class LevelDB {
         if (err) {
           reject(err);
         }
-        resolve(value);
+        resolve(JSON.parse(value));
       });
     });
   }
@@ -46,7 +87,6 @@ class LevelDB {
   // Implement this method
   getBlocksCount() {
     let self = this;
-
     return new Promise(function(resolve) {
       let count = 0;
       self.db

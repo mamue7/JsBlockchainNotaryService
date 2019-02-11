@@ -38,9 +38,9 @@ class BlockAPI {
      * Initilization of all the controllers
      */
 	initControllers() {
-		require("./api/BlockController.js")(this.app);
-		require("./api/MempoolController.js")(this.app);
-		//require("./api/StarNotaryController.js")(this.app);
+		//require("./api/BlockController.js")(this.app);
+		//require("./api/MempoolController.js")(this.app);
+		require("./api/StarNotaryController.js")(this.app);
 	}
 
     /**

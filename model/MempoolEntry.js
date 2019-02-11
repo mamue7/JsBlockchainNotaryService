@@ -5,7 +5,8 @@
 class MempoolEntry {
     constructor(data) {
         (this.address = ""),
-        (this.timeStamp = 0)
+        (this.timeStamp = 0),
+        (this.message = "")
     }
   }
   
