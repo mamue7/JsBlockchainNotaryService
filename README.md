@@ -46,19 +46,23 @@ Available Methods:
   BODY: send the bitcoin wallet address used for validation
 
   Example:
+  ```json
   { "address":"19xaiMqayaNrn3x7AjV5cU4Mk5f5prRVpL" }
-  
+  ```
+
   RESPONSE: 
   
   200 OK: Validation request data
 
   Example:
+  ```json
   {
     "walletAddress": "19xaiMqayaNrn3x7AjV5cU4Mk5f5prRVpL",
     "requestTimeStamp": "1544451269",
     "message": "19xaiMqayaNrn3x7AjV5cU4Mk5f5prRVpL:1544451269:starRegistry",
     "validationWindow": 300
   }
+  ```
 
   500: Error
 
@@ -67,16 +71,19 @@ Available Methods:
   BODY: send the bitcoin wallet address and the generated signature. The signature has to be generated in your wallet using the returned message and wallet address.
 
   Example:
+  ```json
   {
     "address":"19xaiMqayaNrn3x7AjV5cU4Mk5f5prRVpL",
     "signature":"H8K4+1MvyJo9tcr2YN2KejwvX1oqneyCH+fsUL1z1WBdWmswB9bijeFfOfMqK68kQ5RO6ZxhomoXQG3fkLaBl+Q="
   }  
+  ```
 
   RESPONSE: 
   
   200 OK: Valid Block data
 
   Example:
+  ```json
   {
       "registerStar": true,
       "status": {
@@ -87,6 +94,7 @@ Available Methods:
           "messageSignature": true
       }
   }
+  ```
 
   500: Error
 
@@ -95,6 +103,7 @@ Available Methods:
   BODY: send the star data.
 
   Example:
+  ```json
   {
       "address": "19xaiMqayaNrn3x7AjV5cU4Mk5f5prRVpL",
       "star": {
@@ -103,12 +112,14 @@ Available Methods:
                   "story": "Found star using https://www.google.com/sky/"
               }
   } 
+  ```
 
   RESPONSE: 
   
   200 OK: Created Block
 
   Example:
+  ```json
   {
       "hash": "8098c1d7f44f4513ba1e7e8ba9965e013520e3652e2db5a7d88e51d7b99c3cc8",
       "height": 1,
@@ -123,6 +134,7 @@ Available Methods:
       "time": "1544455399",
       "previousBlockHash": "639f8e4c4519759f489fc7da607054f50b212b7d8171e7717df244da2f7f2394"
   }
+  ```
 
   500: Error
 
