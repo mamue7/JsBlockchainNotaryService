@@ -22,8 +22,8 @@ class Blockchain {
     await self.getBlock(0).catch(async function(err) {
         // create genesis block on init
         await self.addGenesisBlock().then(
-          function(value) {
-            console.log(value);
+          function(message) {
+            console.log(message);
           },
           function(err) {});
       }
@@ -71,8 +71,8 @@ class Blockchain {
         function(err) {
           // getBlockHeight rejects if genesis block doesn't exist
           self.addGenesisBlock().then(
-            function(value) {
-              console.log(value);
+            function(message) {
+              console.log(message);
               // continue to add new block after genesis block has been created
               self.addBlock(newBlock);
             },

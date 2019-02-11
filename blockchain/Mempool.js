@@ -88,7 +88,6 @@ class Mempool {
                 resolve(mempoolValidEntry);
             }
             else {
-                console.log(4)
                 reject("Error! The given request could not be verified!");
             }
 
