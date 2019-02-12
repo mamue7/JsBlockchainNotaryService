@@ -7,8 +7,8 @@ const level = require("level");
 class LevelDB {
 
   // Declaring the class constructor
-  constructor(dbName) {
-    this.db = level("./db/" + dbName);
+  constructor() {
+    this.db = level("./db");
   }
 
   // Get data from levelDB by key (Promise)
