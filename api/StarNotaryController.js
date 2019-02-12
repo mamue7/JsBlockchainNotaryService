@@ -24,6 +24,7 @@ class StarNotaryController {
         let self = this;
         self.mempool = new MempoolClass.Mempool();
         self.blockchain = new BlockchainClass.Blockchain();
+        await self.blockchain.initialize();
         self.requestValidation();
         self.validate();
         self.addBlock();

@@ -19,11 +19,11 @@ class Blockchain {
   async initialize() {
     let self = this;
     // check if genesis block (index=0) exists
-    await self.getBlock(0).catch(async function(err) {
+    await self.getBlockHeight().catch(async function(err) {
         // create genesis block on init
         await self.addGenesisBlock().then(
           function(message) {
-            //console.log(message);
+            console.log(message);
           },
           function(err) {});
       }
