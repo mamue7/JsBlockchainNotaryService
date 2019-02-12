@@ -38,7 +38,7 @@ class StarNotaryController {
      */
     requestValidation() {
         let self = this;
-        self.app.post("/api/requestValidation", (req, res) => {
+        self.app.post("/requestValidation", (req, res) => {
             if(!req.body.address || req.body.address == "")
             {
                 res.status(500).send('Error! No wallet address has been sent!');
@@ -48,7 +48,7 @@ class StarNotaryController {
                 self.mempool.addRequestValidation(req.body.address)
                 .then(
                     function(requestObject) {
-                        res.send(JSON.stringify(requestObject));    
+                        res.send(requestObject);    
                     }
                 );
             }
@@ -60,7 +60,7 @@ class StarNotaryController {
      */
     validate() {
         let self = this;
-        self.app.post("/api/message-signature/validate", (req, res) => {
+        self.app.post("/message-signature/validate", (req, res) => {
             if(!req.body.address || req.body.address == "" || !req.body.signature || req.body.signature == "")
             {
                 res.status(500).send('Error! Wallet address and signature required!');
@@ -68,7 +68,7 @@ class StarNotaryController {
             else {
                 self.mempool.validateRequestByWallet(req.body.address, req.body.signature).then(
                     function(validRequest) {
-                        res.send(JSON.stringify(validRequest));  
+                        res.send(validRequest);  
                     },
                     function() {
                         res.status(500).send('Error! Request could not be validated!');
@@ -83,11 +83,7 @@ class StarNotaryController {
      */
     addBlock() {
         let self = this;
-        self.app.post("/api/block", (req, res) => {
-
-            // TODO: prüfen
-            // Time-Window
-            // Nur 1 star auf einmal
+        self.app.post("/block", (req, res) => {
 
             if(!req.body.address || req.body.address == "" || !req.body.star)
             {
@@ -111,7 +107,7 @@ class StarNotaryController {
                         self.blockchain.addBlock(block).then(
                             function(block) {
                                 block.body.star['storyDecoded'] = hex2ascii(block.body.star.story);
-                                res.send(JSON.stringify(block));  
+                                res.send(block);  
                             },
                             function() {
                                 res.status(500).send('Error! Block could not be added!');
@@ -131,11 +127,11 @@ class StarNotaryController {
      */
     getBlockByHash() {
         let self = this;
-        this.app.get("/api/stars/hash:value", (req, res) => {
+        this.app.get("/stars/hash:value", (req, res) => {
             self.blockchain.getBlockByHash(req.params.value.substr(1)).then(
                 function(block) {
                     block.body.star.storyDecoded = hex2ascii(block.body.star.story);
-                    res.send(JSON.stringify(block));
+                    res.send(block);
                 },
                 function(err) {
                     res.status(500).send('Error! Invalid block hash!')
@@ -149,14 +145,14 @@ class StarNotaryController {
      */
     getBlockByWalletAddress() {
         let self = this;
-        this.app.get("/api/stars/address:value", (req, res) => {
+        this.app.get("/stars/address:value", (req, res) => {
             self.blockchain.getBlockByWalletAddress(req.params.value.substr(1)).then(
                 function(blocks) {
                     for(let i = 0; i < blocks.length; i++)
                     {
                         blocks[i].body.star.storyDecoded = hex2ascii(blocks[i].body.star.story);
                     }
-                    res.send(JSON.stringify(blocks));
+                    res.send(blocks);
                 },
                 function(err) {
                     res.status(500).send('Error! No existing blocks for given wallet address!')
@@ -170,11 +166,11 @@ class StarNotaryController {
      */
     getBlockByHeight() {
         let self = this;
-        this.app.get("/api/block/height:value", (req, res) => {
+        this.app.get("/block/height:value", (req, res) => {
             self.blockchain.getBlock(req.params.value.substr(1)).then(
                 function(block) {
                     block.body.star.storyDecoded = hex2ascii(block.body.star.story);
-                    res.send(JSON.stringify(block));
+                    res.send(block);
                 },
                 function(err) {
                     res.status(500).send('Error! No existing block for given height!')

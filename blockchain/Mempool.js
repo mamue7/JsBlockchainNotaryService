@@ -103,7 +103,10 @@ class Mempool {
       return new Promise(
           function(resolve, reject) {
               if(self.mempoolValid[walletAddress])
+              {
+                delete self.mempoolValid[walletAddress];
                 resolve();
+              }
               else
                 reject();
           }
